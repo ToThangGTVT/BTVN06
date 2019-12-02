@@ -29,21 +29,25 @@ public class TongHieu {
             }
         }
 
-        if(a.length()!=b.length()){
+        if(a.length()!=b.length()||phanThua!=0){
             n = Math.max(a.length(), b.length());
             String phanKhongCong;
             StringBuilder phanKhongCongReverse;
             int m;
-            if(a.length()>b.length()){
-                m = a.length()-b.length();
-                phanKhongCong = a.toString().substring(m-1,n);
+            if(a.length()>=b.length()){
+                m = Math.min(a.length(), b.length());
+                phanKhongCong = a.toString().substring(m,n);
                 phanKhongCongReverse = new StringBuilder(phanKhongCong).reverse();
             } else {
-                m = b.length()-a.length();
-                phanKhongCong = b.toString().substring(m-1,n);
+                m = Math.min(a.length(), b.length());
+                phanKhongCong = b.toString().substring(m,n);
                 phanKhongCongReverse = new StringBuilder(phanKhongCong).reverse();
             }
-            ketQua.insert(0,Integer.parseInt(String.valueOf(phanKhongCongReverse))+phanThua);
+            if(phanThua==0){
+                ketQua.insert(0,phanKhongCongReverse);
+                return ketQua.toString();
+            }
+            ketQua.insert(0,tinhTong(phanKhongCongReverse.toString(),String.valueOf(phanThua)));
         }
         return ketQua.toString();
     }
