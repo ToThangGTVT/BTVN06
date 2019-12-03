@@ -60,11 +60,7 @@ public class ChuanHoa {
         s = s.replace("-", "+-");
         String[] k = s.split("\\+");
         for (int i = 0; i < k.length; i++) {
-            if(k[i].contains("-")){
-                tong =tongHieu.tinhHieu(tong,k[i].replace("-",""));
-            } else {
-                tong =tongHieu.tinhTong(tong,k[i]);
-            }
+            tong = tongHieu.tinhTong(tong, k[i]);
         }
         return tong;
     }
