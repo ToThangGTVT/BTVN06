@@ -1,7 +1,20 @@
 package com.th3.bt03;
 
 public class TongHieu {
-    protected String tinhTong(String a1, String b1) {
+    public String tinhTong(String a1, String b1) {
+        boolean am = false;
+        if (a1.contains("-") && b1.contains("-")) {
+            am = true;
+            a1 = a1.replace("-", "");
+            b1 = b1.replace("-", "");
+        } else if (a1.contains("-") && !b1.contains("-")) {
+            a1 = a1.replace("-", "");
+            return tinhHieu(b1, a1);
+        } else if (b1.contains("-") && !a1.contains("-")) {
+            b1 = b1.replace("-", "");
+            return tinhHieu(a1, b1);
+        }
+
         StringBuilder a = new StringBuilder(a1);
         StringBuilder b = new StringBuilder(b1);
         a.reverse();
@@ -49,10 +62,15 @@ public class TongHieu {
             }
             ketQua.insert(0, tinhTong(phanKhongCongReverse.toString(), String.valueOf(phanThua)));
         }
-        return ketQua.toString();
+        if (am) {
+            return ketQua.insert(0, "-").toString();
+        } else {
+            return ketQua.toString();
+        }
+
     }
 
-    protected String tinhHieu(String a1, String b1) {
+    public String tinhHieu(String a1, String b1) {
         boolean am = false;
         if (a1.length() < b1.length()) {
             String strTemp = a1;

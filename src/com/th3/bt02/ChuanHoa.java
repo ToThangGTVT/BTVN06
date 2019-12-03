@@ -1,5 +1,7 @@
 package com.th3.bt02;
 
+import com.th3.bt03.TongHieu;
+
 public class ChuanHoa {
     private boolean dau;
     private int i;
@@ -51,15 +53,19 @@ public class ChuanHoa {
         }
     }
 
-    protected int tinhGiaTri(String s) {
+    protected String tinhGiaTri(String s) {
+        TongHieu tongHieu = new TongHieu();
         s = chuanHoa(s);
-        int tong = 0;
+        String tong = "";
         s = s.replace("-", "+-");
         String[] k = s.split("\\+");
         for (int i = 0; i < k.length; i++) {
-            tong = tong + Integer.parseInt(k[i]);
+            if(k[i].contains("-")){
+                tong =tongHieu.tinhHieu(tong,k[i].replace("-",""));
+            } else {
+                tong =tongHieu.tinhTong(tong,k[i]);
+            }
         }
         return tong;
     }
-
 }
