@@ -15,7 +15,7 @@ public class TongHieu {
             int hangTu1 = Integer.parseInt(a.substring(i, i + 1));
             int hangTu2 = Integer.parseInt(b.substring(i, i + 1));
             int temp = hangTu1 + hangTu2;
-            if (i <=n-1) {
+            if (i <= n - 1) {
                 if (String.valueOf(temp).length() >= 2) {
                     ketQua.insert(0, Integer.parseInt(String.valueOf(temp).substring(1)) + phanThua);
                 } else if (String.valueOf(temp).length() == 1) {
@@ -29,32 +29,46 @@ public class TongHieu {
             }
         }
 
-        if(a.length()!=b.length()||phanThua!=0){
+        if (a.length() != b.length() || phanThua != 0) {
             n = Math.max(a.length(), b.length());
             String phanKhongCong;
             StringBuilder phanKhongCongReverse;
             int m;
-            if(a.length()>=b.length()){
+            if (a.length() >= b.length()) {
                 m = Math.min(a.length(), b.length());
-                phanKhongCong = a.toString().substring(m,n);
+                phanKhongCong = a.toString().substring(m, n);
                 phanKhongCongReverse = new StringBuilder(phanKhongCong).reverse();
             } else {
                 m = Math.min(a.length(), b.length());
-                phanKhongCong = b.toString().substring(m,n);
+                phanKhongCong = b.toString().substring(m, n);
                 phanKhongCongReverse = new StringBuilder(phanKhongCong).reverse();
             }
-            if(phanThua==0){
-                ketQua.insert(0,phanKhongCongReverse);
+            if (phanThua == 0) {
+                ketQua.insert(0, phanKhongCongReverse);
                 return ketQua.toString();
             }
-            ketQua.insert(0,tinhTong(phanKhongCongReverse.toString(),String.valueOf(phanThua)));
+            ketQua.insert(0, tinhTong(phanKhongCongReverse.toString(), String.valueOf(phanThua)));
         }
         return ketQua.toString();
     }
 
     protected String tinhHieu(String a1, String b1) {
+        boolean am = false;
+        if (a1.length() < b1.length()) {
+            String strTemp = a1;
+            a1 = b1;
+            b1 = strTemp;
+            am = true;
+        } else if (a1.compareTo(b1) < 0) {
+            String strTemp = a1;
+            a1 = b1;
+            b1 = strTemp;
+            am = true;
+        }
+
         StringBuilder a = new StringBuilder(a1);
         StringBuilder b = new StringBuilder(b1);
+
         a.reverse();
         b.reverse();
         int n;
@@ -66,38 +80,47 @@ public class TongHieu {
             int hangTu1 = Integer.parseInt(a.substring(i, i + 1));
             int hangTu2 = Integer.parseInt(b.substring(i, i + 1));
             int temp = hangTu1 - hangTu2;
-            while (temp<0){
+            if (temp < 0 && i == 0) {
                 phanThua++;
-                temp = Integer.parseInt(phanThua +String.valueOf(hangTu1)) - hangTu2;
+                temp = Integer.parseInt(phanThua + String.valueOf(hangTu1)) - hangTu2;
+                ketQua.insert(0, temp);
+            } else if (temp < 0 && i > 0) {
+                temp = Integer.parseInt(phanThua + String.valueOf(hangTu1)) - hangTu2 - phanThua;
+                ketQua.insert(0, temp);
+                phanThua = 1;
+            } else if (temp == 0) {
+                ketQua.insert(0, temp);
+            } else if (temp > 0) {
+                ketQua.insert(0, hangTu1 - hangTu2);
             }
-            String sa = "";
-            sa = sa+ phanThua+a.substring(i,i+1);
-            int temp2 = Integer.parseInt(sa)-hangTu2;
-            if(String.valueOf(temp2).length()>1){
-                ketQua.insert(0,String.valueOf (temp2).substring(1));
-            } else {
-                ketQua.insert(0,temp2);
-            }
-
         }
 
-        if(a.length()!=b.length()){
+        if (a.length() != b.length()) {
             n = Math.max(a.length(), b.length());
             String phanKhongCong;
             StringBuilder phanKhongCongReverse;
             int m;
-            if(a.length()>b.length()){
-                m = a.length()-b.length();
-                phanKhongCong = a.toString().substring(m-1,n);
+            if (a.length() > b.length()) {
+                m = Math.min(a.length(), b.length());
+                phanKhongCong = a.toString().substring(m, n);
                 phanKhongCongReverse = new StringBuilder(phanKhongCong).reverse();
             } else {
-                m = b.length()-a.length();
-                phanKhongCong = b.toString().substring(m-1,n);
+                m = Math.min(a.length(), b.length());
+                phanKhongCong = b.toString().substring(m, n);
                 phanKhongCongReverse = new StringBuilder(phanKhongCong).reverse();
             }
-            ketQua.insert(0,Integer.parseInt(String.valueOf(phanKhongCongReverse))-phanThua);
+            if (phanThua == 0) {
+                ketQua.insert(0, phanKhongCongReverse);
+                if (am) {
+                    return ketQua.insert(0, "-").toString();
+                }
+                return ketQua.toString();
+            }
+            ketQua.insert(0, tinhHieu(phanKhongCongReverse.toString(), String.valueOf(phanThua)));
+        }
+        if (am) {
+            return ketQua.insert(0, "-").toString();
         }
         return ketQua.toString();
     }
-
 }
