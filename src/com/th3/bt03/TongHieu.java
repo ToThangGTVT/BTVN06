@@ -67,10 +67,23 @@ public class TongHieu {
         } else {
             return ketQua.toString();
         }
-
     }
 
     public String tinhHieu(String a1, String b1) {
+        if (b1.contains("-") && !a1.contains("-")) {
+            b1 = b1.replace("-", "");
+            return tinhTong(a1, b1);
+        } else if (a1.contains("-") && !b1.contains("-")) {
+            StringBuilder stringBuilder = new StringBuilder(b1);
+            stringBuilder.insert(0, "-");
+            a1 = stringBuilder.toString();
+            return tinhTong(a1, b1);
+        } else if(a1.contains("-")&&(b1.contains("-"))){
+            String strTemp = a1;
+            a1 = b1;
+            b1 = strTemp;
+        }
+
         boolean am = false;
         if (a1.length() < b1.length()) {
             String strTemp = a1;
