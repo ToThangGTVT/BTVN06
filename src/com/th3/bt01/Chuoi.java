@@ -32,7 +32,7 @@ public class Chuoi {
     public void inChuHoa() {
         for (int i = 0; i < this.s.length(); i++) {
             if (s.charAt(i) < 97 && s.charAt(i) >= 65) {
-                System.out.println(String.valueOf(s.charAt(i)));
+                System.out.print(String.valueOf(s.charAt(i)+"\t"));
             }
         }
     }
